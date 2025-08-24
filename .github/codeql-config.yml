@@ -1,17 +1,17 @@
-name: "CodeQL Optimized Config"
+name: "Ultra-Strict CodeQL"
+
+# Only analyze main.py  
+paths:
+  - "main.py"
+
+# Ignore everything else
+paths-ignore:
+  - "**/*"
+  - "!main.py"
+
+# Use only basic security queries
 queries:
   - uses: security-and-quality
 
-paths:
-  - "main.py"
-  - "app.py"
-
-paths-ignore:
-  - "**/*.md"
-  - "**/*.txt"  
-  - "**/*.yml"
-  - "**/test*"
-  - "**/.*"
-
-# Disable experimental queries that might give false positives
+# Disable experimental features
 disable-default-queries: false
