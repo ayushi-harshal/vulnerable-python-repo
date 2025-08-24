@@ -1,8 +1,3 @@
-"""
-Simple Database Module for CodeArmor Testing
-Contains SQL injection vulnerability that's easily fixable
-"""
-
 import sqlite3
 
 class UserDatabase:
@@ -22,16 +17,7 @@ class UserDatabase:
         self.conn.commit()
     
     def search_user(self, username):
-        """VULNERABILITY: SQL Injection (EASY FIX: use parameterized query)"""
-        # Vulnerable code - direct string concatenation
         query = f"SELECT * FROM users WHERE username = '{username}'"
         
         cursor = self.conn.execute(query)
-        return cursor.fetchall()
-    
-    def search_user_safe(self, username):
-        """FIXED VERSION: Using parameterized queries"""
-        # Safe code - parameterized query
-        query = "SELECT * FROM users WHERE username = ?"
-        cursor = self.conn.execute(query, (username,))
         return cursor.fetchall()

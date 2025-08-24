@@ -1,6 +1,0 @@
-# Vulnerable Dependencies for CodeArmor Testing
-# These 3 packages have known vulnerabilities and need upgrades
-
-Flask==1.0.2              # CVE-2019-1010083 - Path traversal vulnerability
-PyYAML==3.13              # CVE-2017-18342 - Arbitrary code execution  
-requests==2.19.0          # CVE-2018-18074 - SSL verification bypass
