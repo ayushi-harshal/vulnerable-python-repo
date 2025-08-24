@@ -4,7 +4,7 @@ requests==2.19.0      # CVE-2018-18074 - SSL verification bypass
 Jinja2==2.8.1         # CVE-2019-10906 - Sandbox escape
 SQLAlchemy==1.2.0     # CVE-2019-7164 - SQL injection via order_by
 PyYAML==3.13          # CVE-2017-18342 - Arbitrary code execution
-Pillow==5.2.0         # CVE-2019-16865 - Buffer overflow
+Pillow==10.3.0         # CVE-2019-16865 - Buffer overflow
 cryptography==2.3     # CVE-2018-10903 - ECDH point validation
 urllib3==1.24.1       # CVE-2019-11324 - Certificate verification bypass
 django==2.1.0         # CVE-2019-6975 - Memory exhaustion DoS
