@@ -1,7 +1,7 @@
 # VULNERABLE DEPENDENCIES - GitHub Security should flag these
 Flask==2.0.1          # CVE-2023-30861 - Should trigger Dependabot alert
 Werkzeug==2.0.1       # Multiple CVEs - Should trigger alerts  
-PyYAML==5.3.1         # CVE-2020-14343 - Should trigger alert
+PyYAML==5.4         # CVE-2020-14343 - Should trigger alert
 requests==2.25.1      # CVE-2023-32681 - Should trigger alert
 urllib3==1.25.8       # CVE-2021-33503 - Should trigger alert
 Pillow==8.2.0         # CVE-2022-22817 - Should trigger alert       
