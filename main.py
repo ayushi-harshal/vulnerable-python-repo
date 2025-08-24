@@ -1,66 +1,57 @@
+#!/usr/bin/env python3
 """
-Simple Vulnerable Web App for CodeArmor Testing
-Contains 3 key vulnerabilities that are easily fixable by AI:
-1. SQL Injection
-2. Unsafe YAML loading  
-3. Hardcoded secrets
+Simple Flask Application for CodeArmor Testing
+Contains 3 key vulnerabilities that are easy for AI to fix
 """
 
-from flask import Flask, request
+from flask import Flask, jsonify, request
 import yaml
-import sqlite3
+from database import UserDatabase
 
+# Create Flask app
 app = Flask(__name__)
 
-# VULNERABILITY 1: Hardcoded secrets (EASY FIX: use environment variables)
-DATABASE_PASSWORD = "admin123"
-API_KEY = "sk-1234567890abcdef"
+# VULNERABILITY 1: Hardcoded secret key (should use environment variable)
+app.config['SECRET_KEY'] = 'hardcoded-insecure-key-12345'
 
-@app.route('/')
-def index():
-    return """
-    <h1>Simple Vulnerable App for CodeArmor</h1>
-    <p>Contains 3 easily fixable vulnerabilities:</p>
-    <ul>
-        <li><a href="/search?name=test">Search Users (SQL Injection)</a></li>
-        <li><a href="/config">Load Config (Unsafe YAML)</a></li>
-    </ul>
-    """
+# Initialize database
+db = UserDatabase()
 
 @app.route('/search')
-def search_users():
-    """VULNERABILITY 2: SQL Injection (EASY FIX: use parameterized queries)"""
-    name = request.args.get('name', '')
-    
-    # Vulnerable: Direct string concatenation
-    query = f"SELECT * FROM users WHERE name = '{name}'"
-    
-    # Simulate database query
-    conn = sqlite3.connect(':memory:')
-    try:
-        cursor = conn.execute(query)
-        return f"Search query: {query}"
-    except Exception as e:
-        return f"Query failed: {e}"
-    finally:
-        conn.close()
+def search_user():
+    """Endpoint that uses vulnerable SQL injection method"""
+    username = request.args.get('username', '')
+    # This calls the vulnerable method in database.py
+    users = db.search_user(username)
+    return jsonify({"users": users})
 
 @app.route('/config', methods=['POST'])
 def load_config():
-    """VULNERABILITY 3: Unsafe YAML loading (EASY FIX: use yaml.safe_load)"""
+    """VULNERABILITY 3: Unsafe YAML loading - can execute arbitrary code"""
     config_data = request.get_data(as_text=True)
-    
-    if not config_data:
-        config_data = "name: test\nversion: 1.0"
-    
-    # Vulnerable: Using yaml.load instead of yaml.safe_load
-    try:
-        config = yaml.load(config_data, Loader=yaml.FullLoader)
-        return f"Config loaded: {config}"
-    except Exception as e:
-        return f"Config error: {e}"
+    # Unsafe YAML loading - should use yaml.safe_load()
+    config = yaml.load(config_data, Loader=yaml.FullLoader)
+    return jsonify({"config": config})
+
+@app.route('/')
+def index():
+    """Basic home endpoint"""
+    return jsonify({
+        "message": "Vulnerable Flask App for CodeArmor Testing",
+        "vulnerabilities": [
+            "1. Hardcoded secret key",
+            "2. SQL injection in /search endpoint", 
+            "3. Unsafe YAML loading in /config endpoint"
+        ],
+        "endpoints": [
+            "/search?username=admin",
+            "/config (POST with YAML data)"
+        ]
+    })
 
 if __name__ == '__main__':
-    # Using hardcoded password from above
-    print(f"Starting app with DB password: {DATABASE_PASSWORD}")
-    app.run(debug=True, host='0.0.0.0')
+    app.run(
+        host='127.0.0.1',  # Only bind to localhost
+        port=5000,
+        debug=False        # Debug mode disabled
+    )
