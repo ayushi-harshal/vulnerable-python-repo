@@ -6,7 +6,14 @@ Contains 3 key vulnerabilities that are easily fixable by AI:
 3. Hardcoded secrets
 """
 
-from flask import Flask, request
+from flask import Flask
+# Security headers added by CodeArmor
+@app.after_request
+def add_security_headers(response):
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'DENY'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    return response, request
 import yaml
 import sqlite3
 
