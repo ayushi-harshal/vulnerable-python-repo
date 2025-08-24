@@ -1,34 +1,39 @@
-name: "Simple CodeQL"
+name: "CodeQL Analysis"
 
 on:
   push:
-    branches: [ "main", "master", "codearmor-auto-*" ]
+    branches: [ main, master, "codearmor-auto-*" ]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ main, master ]
 
 jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
-    timeout-minutes: 5
-    
     permissions:
       actions: read
-      contents: read  
+      contents: read
       security-events: write
 
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'python' ]
+
     steps:
-    - name: Checkout
+    - name: Checkout repository
       uses: actions/checkout@v4
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
-        languages: python
-        config-file: ./.github/codeql-config.yml
+        languages: ${{ matrix.language }}
+        queries: security-extended
 
     - name: Autobuild
       uses: github/codeql-action/autobuild@v3
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:${{matrix.language}}"
