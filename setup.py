@@ -62,7 +62,9 @@ def main():
     
     # Import and run the app
     from main import app
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    64     from main import app
+65     app.run(host='127.0.0.1', port=5000, debug=False)
+66
 
 if __name__ == '__main__':
     main()
