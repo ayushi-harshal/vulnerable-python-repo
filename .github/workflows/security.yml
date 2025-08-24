@@ -24,12 +24,20 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     
+    - name: Expected Vulnerabilities Summary
+      run: |
+        echo "🚨 EXPECTED VULNERABILITIES FOR CODEARMOR:"
+        echo "� SQL Injection (CWE-89) - database.py"
+        echo "🔑 Hardcoded Secrets (CWE-798) - config.py, main.py"  
+        echo "🧨 Unsafe YAML Loading (CWE-502) - main.py"
+        echo "📦 Vulnerable Dependencies: Flask 2.0.1, PyYAML 5.3.1, urllib3 1.25.8"
+        echo "🎯 These should trigger GitHub Security alerts!"
+    
     - name: Run Bandit Security Scan (Should find issues)
       run: |
         pip install bandit[toml]
-        echo "🔍 Running Bandit - expecting to find SQL injection, hardcoded secrets..."
+        echo "🔍 Running Bandit - expecting to find vulnerabilities..."
         bandit -r . -f json -o bandit-report.json
-        echo "❌ If this step passes, Bandit didn't find expected vulnerabilities!"
         bandit -r . --exit-zero-on-skipped
       continue-on-error: false
     
@@ -38,48 +46,14 @@ jobs:
         pip install safety
         echo "🔍 Running Safety - expecting vulnerable dependencies..."
         safety check --json --output safety-report.json
-        echo "❌ If this step passes, Safety didn't find expected vulnerabilities!"
         safety check
       continue-on-error: false
     
-    - name: Run pip-audit (Should find CVEs)
-      run: |
-        pip install pip-audit  
-        echo "🔍 Running pip-audit - expecting CVE alerts..."
-        pip-audit --format=json --output=pip-audit.json
-        echo "❌ If this step passes, pip-audit didn't find expected CVEs!"
-        pip-audit
-      continue-on-error: false
-    
-    - name: Upload Security Reports (Only if we get here)
+    - name: Upload Security Reports
       uses: actions/upload-artifact@v4
       with:
         name: security-reports-with-vulnerabilities
         path: |
           bandit-report.json
-          safety-report.json  
-          pip-audit.json
+          safety-report.json
       if: always()
-
-  vulnerability-summary:
-    runs-on: ubuntu-latest
-    needs: security-scan
-    if: always()
-    
-    steps:
-    - name: Expected Vulnerability Summary
-      run: |
-        echo "🚨 EXPECTED VULNERABILITIES FOR CODEARMOR:"
-        echo ""
-        echo "🔓 SQL Injection (CWE-89) - database.py"
-        echo "🔑 Hardcoded Secrets (CWE-798) - config.py, main.py"  
-        echo "🧨 Unsafe YAML Loading (CWE-502) - main.py"
-        echo "📦 Vulnerable Dependencies:"
-        echo "   • Flask 2.0.1 (CVE-2023-30861)"
-        echo "   • PyYAML 5.3.1 (CVE-2020-14343)"
-        echo "   • requests 2.25.1 (CVE-2023-32681)"
-        echo "   • urllib3 1.25.8 (CVE-2021-33503)"
-        echo "   • Pillow 8.2.0 (CVE-2022-22817)"
-        echo ""
-        echo "🎯 These should trigger GitHub Security alerts!"
-        echo "🤖 CodeArmor should auto-fix these issues!"
