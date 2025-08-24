@@ -3,7 +3,7 @@ import yaml
 from database import UserDatabase
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'hardcoded-insecure-key-12345'
+app.config["SECRET_KEY"] = "dev-key-change-in-production"
 
 # Initialize database
 db = UserDatabase()
@@ -21,7 +21,7 @@ def load_config():
     """Unsafe YAML deserialization endpoint"""
     config_data = request.get_data(as_text=True)
     # VULNERABILITY: Unsafe YAML loading (CWE-502) - allows code execution
-    config = yaml.load(config_data, Loader=yaml.FullLoader)
+    config = yaml.safe_load(config_data, Loader=yaml.FullLoader)
     return jsonify({"config": config, "status": "loaded"})
 
 @app.route('/')
@@ -44,4 +44,4 @@ def index():
 
 if __name__ == '__main__':
     # Run the vulnerable application
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    app.run(host='127.0.0.1', port=5000, debug=False)
