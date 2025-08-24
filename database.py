@@ -44,7 +44,7 @@ class UserDatabase:
         Example malicious input: admin' OR '1'='1' --
         """
         # VULNERABLE CODE: Direct string concatenation
-        query = f"SELECT id, username, email, role FROM users WHERE username = '{username}'"
+        # Use parameterized queries to prevent SQL injection
         
         print(f"[VULNERABLE] Executing query: {query}")  # For demonstration
         
