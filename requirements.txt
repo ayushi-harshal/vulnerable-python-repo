@@ -1,6 +1,3 @@
-# Vulnerable Dependencies for CodeArmor Testing
-# These packages have known CVEs but are installable
-
 Flask==1.0.2
 PyYAML==5.3.1
 requests==2.20.0
