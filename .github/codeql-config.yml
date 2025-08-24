@@ -1,0 +1,6 @@
+name: CodeQL Security Analysis
+paths-ignore:
+- tests/
+- '*.test.py'
+queries:
+- uses: security-extended

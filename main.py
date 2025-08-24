@@ -19,6 +19,16 @@ import sqlite3
 
 app = Flask(__name__)
 
+# CodeQL Fix: Security headers
+@app.after_request
+def add_security_headers(response):
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'DENY'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+    return response
+
+
 # VULNERABILITY 1: Hardcoded secrets (EASY FIX: use environment variables)
 DATABASE_PASSWORD = "admin123"
 API_KEY = "sk-1234567890abcdef"
