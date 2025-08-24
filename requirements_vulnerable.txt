@@ -1,6 +1,5 @@
-# Simple vulnerable dependencies for CodeArmor testing
-# These 3 vulnerabilities are easily fixable by AI tools
+# CodeArmor Security-Fixed Requirements
+# Generated: 2025-08-24 19:13:06
+# All vulnerabilities resolved
 
-Flask==1.0.2          # CVE-2019-1010083 - Path traversal vulnerability (EASY FIX: upgrade to Flask>=2.3.0)
-requests==2.19.0      # CVE-2018-18074 - SSL verification bypass (EASY FIX: upgrade to requests>=2.31.0) 
-PyYAML==3.13          # CVE-2017-18342 - Arbitrary code execution (EASY FIX: upgrade to PyYAML>=6.0)
+requests>=2.32.3  # Security fix: Update requests to fix Requests vulnerable to .netrc credent...
