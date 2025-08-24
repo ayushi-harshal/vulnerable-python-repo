@@ -21,7 +21,7 @@ def load_config():
     """Unsafe YAML deserialization endpoint"""
     config_data = request.get_data(as_text=True)
     # VULNERABILITY: Unsafe YAML loading (CWE-502) - allows code execution
-    config = yaml.load(config_data, Loader=yaml.FullLoader)
+    config = yaml.safe_load(config_data, Loader=yaml.FullLoader)
     return jsonify({"config": config, "status": "loaded"})
 
 @app.route('/')
