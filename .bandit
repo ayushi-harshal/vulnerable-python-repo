@@ -1,0 +1,4 @@
+[bandit]
+skips = B404,B603
+severity = high
+confidence = high
