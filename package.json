@@ -1,0 +1,20 @@
+{
+  "name": "vulnerable-web-app",
+  "version": "1.0.0",
+  "description": "Vulnerable web application for security testing",
+  "main": "app.js",
+  "dependencies": {
+    "express": "4.16.0",
+    "lodash": "4.17.11",
+    "axios": "0.18.0",
+    "moment": "2.19.0",
+    "handlebars": "4.0.12",
+    "jquery": "3.3.1",
+    "bootstrap": "3.3.7",
+    "socket.io": "2.1.0"
+  },
+  "devDependencies": {
+    "webpack": "4.16.0",
+    "node-sass": "4.9.0"
+  }
+}
