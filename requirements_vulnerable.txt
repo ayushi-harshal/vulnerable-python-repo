@@ -14,4 +14,4 @@ numpy==1.15.0         # CVE-2019-6446 - Buffer overflow
 paramiko==2.4.0       # CVE-2018-1000805 - Authentication bypass
 lxml==4.2.0          # CVE-2018-19787 - XPath injection
 simplejson==3.15.0   # CVE-2019-12872 - Integer overflow
-tornado==5.0.0       # CVE-2018-1000656 - Path traversal
+tornado==6.5       # CVE-2018-1000656 - Path traversal
