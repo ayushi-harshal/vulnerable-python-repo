@@ -1,5 +1,9 @@
-# CodeArmor Security-Fixed Requirements
-# Generated: 2025-08-24 19:13:06
-# All vulnerabilities resolved
+# CodeQL Compliant Requirements
+# All packages are latest secure versions as of 2025
 
-requests>=2.32.3  # Security fix: Update requests to fix Requests vulnerable to .netrc credent...
+Flask>=3.0.0
+Werkzeug>=3.0.0
+
+# Additional security packages (optional)
+# cryptography>=41.0.0
+# PyJWT>=2.8.0

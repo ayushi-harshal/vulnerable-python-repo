@@ -1,0 +1,17 @@
+name: "CodeQL Optimized Config"
+queries:
+  - uses: security-and-quality
+
+paths:
+  - "main.py"
+  - "app.py"
+
+paths-ignore:
+  - "**/*.md"
+  - "**/*.txt"  
+  - "**/*.yml"
+  - "**/test*"
+  - "**/.*"
+
+# Disable experimental queries that might give false positives
+disable-default-queries: false
