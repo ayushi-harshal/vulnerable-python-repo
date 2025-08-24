@@ -1,17 +1,6 @@
-# Vulnerable dependencies - will trigger GitHub Security alerts
-Flask==1.0.2          # CVE-2019-1010083 - Path traversal vulnerability
-requests==2.19.0      # CVE-2018-18074 - SSL verification bypass  
-Jinja2==2.8.1         # CVE-2019-10906 - Sandbox escape
-SQLAlchemy==1.2.0     # CVE-2019-7164 - SQL injection via order_by
-PyYAML==3.13          # CVE-2017-18342 - Arbitrary code execution
-Pillow==5.2.0         # CVE-2019-16865 - Buffer overflow
-cryptography==2.3     # CVE-2018-10903 - ECDH point validation
-urllib3==1.24.1       # CVE-2019-11324 - Certificate verification bypass
-django==2.1.0         # CVE-2019-6975 - Memory exhaustion DoS
-numpy==1.15.0         # CVE-2019-6446 - Buffer overflow
+# Simple vulnerable dependencies for CodeArmor testing
+# These 3 vulnerabilities are easily fixable by AI tools
 
-# Additional vulnerable packages
-paramiko==2.4.0       # CVE-2018-1000805 - Authentication bypass
-lxml==4.2.0          # CVE-2018-19787 - XPath injection
-simplejson==3.15.0   # CVE-2019-12872 - Integer overflow
-tornado==5.0.0       # CVE-2018-1000656 - Path traversal
+Flask==1.0.2          # CVE-2019-1010083 - Path traversal vulnerability (EASY FIX: upgrade to Flask>=2.3.0)
+requests==2.19.0      # CVE-2018-18074 - SSL verification bypass (EASY FIX: upgrade to requests>=2.31.0) 
+PyYAML==3.13          # CVE-2017-18342 - Arbitrary code execution (EASY FIX: upgrade to PyYAML>=6.0)
