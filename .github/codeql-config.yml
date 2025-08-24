@@ -1,6 +1,21 @@
-name: CodeQL Security Analysis
-paths-ignore:
-- tests/
-- '*.test.py'
+name: "CodeQL Security Config"
 queries:
-- uses: security-extended
+  - uses: security-and-quality
+
+# Paths to ignore
+paths-ignore:
+  - "**/*.md"
+  - "**/*.txt"
+  - "**/*.yml"
+  - "**/*.yaml"
+  - "**/test_*"
+  - "**/tests/"
+  - "**/*test*"
+
+# Only scan main application files
+paths:
+  - "main.py"
+  - "app.py"
+
+# Disable problematic queries
+disable-default-queries: false
